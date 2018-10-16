@@ -6,32 +6,31 @@ const keys = require('./keys.js');
 const request = require('request');
 const spotify = require('node-spotify-api');
 const omdb = require('omdb');
-//const bandsintown = require('bandsintown')//(APP_ID);
+const bandsintown = require('bandsintown'); //+ bandsInTownKey;
 const moment = require('moment');
 
 const action = process.argv[2];
 const parameter = process.argv.slice(3).join(" ");
-const spotify = new Spotify(keys.spotify);
 
 
 
 if (action === 'concert-this' ) {
    
-    var artist = parameter;
+    let artist = parameter;
     console.log(artist);
    
-    var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+    let queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=bandsInTownKey"; //+ bandsintown;
 
     request(queryURL, function (error, response, body) {
         if (error) console.log(error);
-        var result  =  JSON.parse(body)[0];
+        let result  =  JSON.parse(body)[0];
+        console.log("\n=====================================================\n");
         console.log("Venue name " + result.venue.name);
         console.log("Venue location " + result.venue.city);
         console.log("Date of Event " +  moment(result.datetime).format("MM/DD/YYYY"));
-       
+        console.log("\n=====================================================\n");
 
-
-    });
+ });
 
 
     // Name of the venue
@@ -39,7 +38,7 @@ if (action === 'concert-this' ) {
     // Date of the Event (use moment to format this as "MM/DD/YYYY")   
 } else if ( action === 'spotify-this-song') {
 
-    var songName = parameter;;
+    let songName = parameter;;
 
     if (songName === undefined) {
         songName = "The sign by Ace of Base";
@@ -51,10 +50,10 @@ if (action === 'concert-this' ) {
             return console.log('Error occurred: ' + err);
             }
 
-            var tableArray = [];
+            let tableArray = [];
 
-            for (var i = 0; i < data.tracks.items.length; i++ ) {
-                var result = {
+            for (let i = 0; i < data.tracks.items.length; i++ ) {
+                let result = {
                     artist : data.tracks.items[i].album.artists[0].name,
                     album_name : data.tracks.items[i].album.name,
                     song_name : data.tracks.items[i].name,
@@ -64,7 +63,7 @@ if (action === 'concert-this' ) {
             }
       
             
-            var table = cTable.getTable(tableArray);
+            let table = cTable.getTable(tableArray);
     
             console.log(table);
 
@@ -73,7 +72,7 @@ if (action === 'concert-this' ) {
 
 // If no song is provided then your program will default to "The Sign" by Ace of Base.
 } else if ( action === 'movie-this') {
-    var movieName = parameter;;
+    let movieName = parameter;;
 
     if (movieName === undefined) {
         movieName = "Mr. Nobody";
@@ -81,7 +80,7 @@ if (action === 'concert-this' ) {
 
     request('http://www.omdbapi.com/?i=tt3896198&apikey=3bc50c76&t=' + parameter, function (error, response, body) {
         
-        var result  =  JSON.parse(body);
+        let result  =  JSON.parse(body);
    // if (!err && res.statusCode === 200) {
         console.log("\n=========================================\n");
         console.log("Title :" + result.Title);
