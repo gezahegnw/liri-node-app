@@ -4,50 +4,85 @@ require('dotenv').config()
 const fs = require('fs');
 const keys = require('./keys.js');
 const request = require('request');
-const spotify = require('node-spotify-api');
+let  spotify = require('node-spotify-api');
 const omdb = require('omdb');
-const bandsintown = require('bandsintown'); //+ bandsInTownKey;
+//const bandsintown = require('bandsintown');//( bandsInTownKey);
+//const bandsintown = require('bandsintown')("codingbootcamp");
 const moment = require('moment');
+//let spotify = new Spotify(keys.spotify);
+
+const cTable = require('console.table')
+const chalk = require('chalk');
 
 const action = process.argv[2];
 const parameter = process.argv.slice(3).join(" ");
+const log = console.log;
 
 
+// If no song is provided then your program will default to Rush Over Me by seven lions.
+/* if ( action === "movie-this") {
+    let movieName = parameter;;
 
-if (action === 'concert-this' ) {
+    if (movieName === undefined) {
+        movieName = "Mr. Nobody";
+    } 
+
+    request("http://www.omdbapi.com/?i=tt3896198&apikey=3bc50c76&t=" + parameter, function (error, response, body) {
+        
+        let result  =  JSON.parse(body);
+    if (!error && response.statusCode === 200) {
+        console.log(error);
+   
+   log(chalk.red("\n=========================================\n"));
+   log(chalk.red("Title :") + result.Title);
+   log(chalk.red("Year :")+ result.Released);
+   log(chalk.red("IMDB Rating :") + result.imdbRating );
+   log(chalk.red("Rotten Tomatoes Rating :") + result.Ratings[1]);//.Value;
+   log(chalk.red("Country :") +  result.Country);
+   log(chalk.red("Language :") + result.Language);
+   log(chalk.red("Plot :") + result.Plot);
+   log(chalk.red("Actors :") +  result.Actors);
+   log(chalk.red("\n=====================================================\n"));
+    } 
+
+});
+
+
+} */
+  if (action === "concert-this") {
    
     let artist = parameter;
     console.log(artist);
    
-    let queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=bandsInTownKey"; //+ bandsintown;
+    let queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=bandsInTownKey"; 
 
     request(queryURL, function (error, response, body) {
-        if (error) console.log(error);
-        let result  =  JSON.parse(body)[0];
-        console.log("\n=====================================================\n");
-        console.log("Venue name " + result.venue.name);
-        console.log("Venue location " + result.venue.city);
-        console.log("Date of Event " +  moment(result.datetime).format("MM/DD/YYYY"));
-        console.log("\n=====================================================\n");
 
+        if (!error && response.statusCode === 200) {
+            console.log(error);
+        let result  =  JSON.parse(body)[0];
+        log(chalk.blue("\n=====================================================\n"));
+        log(chalk.blue("Venue name ") + result.venue.name);
+        log(chalk.blue("Venue location ") + result.venue.city);
+        log(chalk.blue("Date of Event ") +  moment(result.datetime).format("MM/DD/YYYY"));
+        log(chalk.blue("\n=====================================================\n"));
+         } 
  });
 
 
-    // Name of the venue
-    // Venue location
-    // Date of the Event (use moment to format this as "MM/DD/YYYY")   
-} else if ( action === 'spotify-this-song') {
+    // Name of the venueVenue location and Date of the Event by using moment js ( moment to format this as "MM/DD/YYYY")   
+} else if ( action === "spotify-this-song") {
 
-    let songName = parameter;;
+    let songName = parameter;
 
     if (songName === undefined) {
-        songName = "The sign by Ace of Base";
+        songName = "Rush Over Me by seven lions";
     } 
    
 
-     spotify.search({ type: 'track', query: songName, limit: 10  }, function(err, data) {
+     spotify.search({ type: "track", query: songName, limit: 1  }, function(err, data) {
             if (err) {
-            return console.log('Error occurred: ' + err);
+            return console.log("Error occurred: " + err);
             }
 
             let tableArray = [];
@@ -63,40 +98,14 @@ if (action === 'concert-this' ) {
             }
       
             
-            let table = cTable.getTable(tableArray);
+            let tableResult = cTable.getTable(tableArray);
     
-            console.log(table);
+            console.log(tableResult);
 
        
     });
 
-// If no song is provided then your program will default to "The Sign" by Ace of Base.
-} else if ( action === 'movie-this') {
-    let movieName = parameter;;
-
-    if (movieName === undefined) {
-        movieName = "Mr. Nobody";
-    } 
-
-    request('http://www.omdbapi.com/?i=tt3896198&apikey=3bc50c76&t=' + parameter, function (error, response, body) {
-        
-        let result  =  JSON.parse(body);
-   // if (!err && res.statusCode === 200) {
-        console.log("\n=========================================\n");
-        console.log("Title :" + result.Title);
-        console.log("Year :" + result.Released);
-        console.log("IMDB Rating :" + result.imdbRating );
-        console.log("Rotten Tomatoes Rating :" + result.Ratings[1]);//.Value);
-        console.log("Country :" +  result.Country);
-        console.log("Language :" + result.Language);
-        console.log("Plot :" + result.Plot);
-        console.log("Actors :" +  result.Actors);
-        console.log("\n=====================================================\n");
-
-   // }
-
-    });
-
-} else if ( action === 'do-what-it-says') {
-    console.log('do what it says')
+    
+} else if ( action === "do-what-it-says") {
+    console.log("do what it says")
 }
