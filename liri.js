@@ -4,12 +4,13 @@ require('dotenv').config()
 const fs = require('fs');
 const keys = require('./keys.js');
 const request = require('request');
-let  spotify = require('node-spotify-api');
+let  Spotify = require('node-spotify-api');
 const omdb = require('omdb');
 //const bandsintown = require('bandsintown');//( bandsInTownKey);
 //const bandsintown = require('bandsintown')("codingbootcamp");
 const moment = require('moment');
-//let spotify = new Spotify(keys.spotify);
+console.log(keys.spotifyKeys);
+let spotify = new Spotify({id:keys.spotifyKeys.client_ID,secret:keys.spotifyKeys.client_secret});
 
 const cTable = require('console.table')
 const chalk = require('chalk');
@@ -20,7 +21,7 @@ const log = console.log;
 
 
 // If no song is provided then your program will default to Rush Over Me by seven lions.
-/* if ( action === "movie-this") {
+ if ( action === "movie-this") {
     let movieName = parameter;;
 
     if (movieName === undefined) {
@@ -47,9 +48,8 @@ const log = console.log;
 
 });
 
-
-} */
-  if (action === "concert-this") {
+ }
+  else if (action === "concert-this") {
    
     let artist = parameter;
     console.log(artist);
@@ -89,7 +89,7 @@ const log = console.log;
 
             for (let i = 0; i < data.tracks.items.length; i++ ) {
                 let result = {
-                    artist : data.tracks.items[i].album.artists[0].name,
+                    artist : data.tracks.items[i].album.artists[i].name,
                     album_name : data.tracks.items[i].album.name,
                     song_name : data.tracks.items[i].name,
                     preview_url : data.tracks.items[i].preview_url 
