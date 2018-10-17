@@ -6,13 +6,13 @@ const keys = require('./keys.js');
 const request = require('request');
 let  Spotify = require('node-spotify-api');
 const omdb = require('omdb');
-//const bandsintown = require('bandsintown');//( bandsInTownKey);
-//const bandsintown = require('bandsintown')("codingbootcamp");
 const moment = require('moment');
-console.log(keys.spotifyKeys);
-let spotify = new Spotify({id:keys.spotifyKeys.client_ID,secret:keys.spotifyKeys.client_secret});
 
-const cTable = require('console.table')
+var spotify = new Spotify({
+    id: keys.spotifyKeys.client_ID,
+    secret: keys.spotifyKeys.client_secret
+  });
+
 const chalk = require('chalk');
 
 const action = process.argv[2];
@@ -22,7 +22,7 @@ const log = console.log;
 
 // If no song is provided then your program will default to Rush Over Me by seven lions.
  if ( action === "movie-this") {
-    let movieName = parameter;;
+    let movieName = parameter;
 
     if (movieName === undefined) {
         movieName = "Mr. Nobody";
@@ -33,17 +33,16 @@ const log = console.log;
         let result  =  JSON.parse(body);
     if (!error && response.statusCode === 200) {
         console.log(error);
-   
-   log(chalk.red("\n=========================================\n"));
-   log(chalk.red("Title :") + result.Title);
-   log(chalk.red("Year :")+ result.Released);
-   log(chalk.red("IMDB Rating :") + result.imdbRating );
-   log(chalk.red("Rotten Tomatoes Rating :") + result.Ratings[1]);//.Value;
-   log(chalk.red("Country :") +  result.Country);
-   log(chalk.red("Language :") + result.Language);
-   log(chalk.red("Plot :") + result.Plot);
-   log(chalk.red("Actors :") +  result.Actors);
-   log(chalk.red("\n=====================================================\n"));
+   log(chalk.red("\n==================================================================================================================================================\n"));
+   log(chalk.green("Title :") + result.Title);
+   log(chalk.green("Year :")+ result.Released);
+   log(chalk.green("IMDB Rating :") + result.imdbRating );
+   log(chalk.green("Rotten Tomatoes Rating :") + result.Ratings[1].Value);
+   log(chalk.green("Country :") +  result.Country);
+   log(chalk.green("Language :") + result.Language);
+   log(chalk.green("Plot :") + result.Plot);
+   log(chalk.green("Actors :") +  result.Actors);
+   log(chalk.red("\n====================================================================================================================================================\n"));
     } 
 
 });
@@ -61,11 +60,11 @@ const log = console.log;
         if (!error && response.statusCode === 200) {
             console.log(error);
         let result  =  JSON.parse(body)[0];
-        log(chalk.blue("\n=====================================================\n"));
+        log(chalk.yellow("\n==================================================================================================================================================\n"));
         log(chalk.blue("Venue name ") + result.venue.name);
         log(chalk.blue("Venue location ") + result.venue.city);
         log(chalk.blue("Date of Event ") +  moment(result.datetime).format("MM/DD/YYYY"));
-        log(chalk.blue("\n=====================================================\n"));
+        log(chalk.yellow("\n==================================================================================================================================================\n"));
          } 
  });
 
@@ -83,29 +82,20 @@ const log = console.log;
      spotify.search({ type: "track", query: songName, limit: 1  }, function(err, data) {
             if (err) {
             return console.log("Error occurred: " + err);
-            }
-
-            let tableArray = [];
-
-            for (let i = 0; i < data.tracks.items.length; i++ ) {
-                let result = {
-                    artist : data.tracks.items[i].album.artists[i].name,
-                    album_name : data.tracks.items[i].album.name,
-                    song_name : data.tracks.items[i].name,
-                    preview_url : data.tracks.items[i].preview_url 
-                }
-                tableArray.push(result);
-            }
-      
-            
-            let tableResult = cTable.getTable(tableArray);
-    
-            console.log(tableResult);
-
-       
+            }else {
+        
+            log(chalk.green("\n======================================================================================================================================\n"));
+            log(chalk.red("Artist: ") + data.tracks.items[0].artists[0].name);
+            log(chalk.red("Song: ") + data.tracks.items[0].name);
+            log(chalk.red("Preview: ") + data.tracks.items[0].preview_url);
+            log(chalk.red("Album: ") + data.tracks.items[0].album.name);
+            log(chalk.green("\n======================================================================================================================================\n"));
+        
+        }
     });
 
-    
-} else if ( action === "do-what-it-says") {
-    console.log("do what it says")
-}
+     } else if ( action === "do-what-it-says") {
+        log(chalk.blue("\n==================================================================================================================================================\n"));
+        log(chalk.green("do what it says"));
+        log(chalk.blue("\n==================================================================================================================================================\n"));
+    }
