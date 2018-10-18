@@ -75,7 +75,7 @@ const log = console.log;
     let songName = parameter;
 
     if (songName === undefined) {
-        songName = "Rush Over Me by seven lions";
+        songName = "The Sign by Ace of Base.";
     } 
    
 
