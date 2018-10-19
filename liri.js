@@ -4,98 +4,122 @@ require('dotenv').config()
 const fs = require('fs');
 const keys = require('./keys.js');
 const request = require('request');
-let  Spotify = require('node-spotify-api');
+let Spotify = require('node-spotify-api');
 const omdb = require('omdb');
 const moment = require('moment');
 
 var spotify = new Spotify({
     id: keys.spotifyKeys.client_ID,
     secret: keys.spotifyKeys.client_secret
-  });
+});
 
 const chalk = require('chalk');
 
 const action = process.argv[2];
 const parameter = process.argv.slice(3).join(" ");
 const log = console.log;
-
+let divider = "\n============================================================================================================\n\n";
 
 // If no song is provided then your program will default to Rush Over Me by seven lions.
- if ( action === "movie-this") {
+if (action === "movie-this") {
     let movieName = parameter;
-
-    if (movieName === undefined) {
+    if (movieName == "") {
         movieName = "Mr. Nobody";
-    } 
+    }
 
-    request("http://www.omdbapi.com/?i=tt3896198&apikey=3bc50c76&t=" + parameter, function (error, response, body) {
+    request("http://www.omdbapi.com/?i=tt3896198&apikey=3bc50c76&t=" + movieName, function (error, response, body) {
+
+        let result = JSON.parse(body);
+        if (!error && response.statusCode === 200) {
+            console.log(error);
+/*
+            log(chalk.red("\n==================================================================================================================================================\n"));
+            log(chalk.green("Title :") + result.Title);
+            log(chalk.green("Year :") + result.Released);
+            log(chalk.green("IMDB Rating :") + result.imdbRating);
+            log(chalk.green("Rotten Tomatoes Rating :") + result.Ratings[1].Value);
+            log(chalk.green("Country :") + result.Country);
+            log(chalk.green("Language :") + result.Language);
+            log(chalk.green("Plot :") + result.Plot);
+            log(chalk.green("Actors :") + result.Actors);
+            log(chalk.red("\n====================================================================================================================================================\n"));
+         */  
+            let saveFile = [
+                "Title :" + result.Title,
+                "Year :" + result.Released,
+                "IMDB Rating :" + result.imdbRating,
+                "Rotten Tomatoes Rating :" + result.Ratings[1].Value,
+                "Country :" + result.Country,
+                "Language :" + result.Language,
+                "Plot :" + result.Plot,
+                "Actors :" + result.Actors,
+               
+         ].join("\n\n");
+
+            // Append showData and the divider to log.txt, print showData to the console
+            fs.appendFile("log.txt", saveFile + divider, function(err) {
+                if (err) throw err;
+                console.log(saveFile);
+             });
+        }
+    });
         
-        let result  =  JSON.parse(body);
-    if (!error && response.statusCode === 200) {
-        console.log(error);
-   log(chalk.red("\n==================================================================================================================================================\n"));
-   log(chalk.green("Title :") + result.Title);
-   log(chalk.green("Year :")+ result.Released);
-   log(chalk.green("IMDB Rating :") + result.imdbRating );
-   log(chalk.green("Rotten Tomatoes Rating :") + result.Ratings[1].Value);
-   log(chalk.green("Country :") +  result.Country);
-   log(chalk.green("Language :") + result.Language);
-   log(chalk.green("Plot :") + result.Plot);
-   log(chalk.green("Actors :") +  result.Actors);
-   log(chalk.red("\n====================================================================================================================================================\n"));
-    } 
+}
+else if (action === "concert-this") {
 
-});
-
- }
-  else if (action === "concert-this") {
-   
     let artist = parameter;
     console.log(artist);
-   
-    let queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=bandsInTownKey"; 
+    let queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=bandsInTownKey";
 
     request(queryURL, function (error, response, body) {
 
         if (!error && response.statusCode === 200) {
             console.log(error);
-        let result  =  JSON.parse(body)[0];
-        log(chalk.yellow("\n==================================================================================================================================================\n"));
-        log(chalk.blue("Venue name ") + result.venue.name);
-        log(chalk.blue("Venue location ") + result.venue.city);
-        log(chalk.blue("Date of Event ") +  moment(result.datetime).format("MM/DD/YYYY"));
-        log(chalk.yellow("\n==================================================================================================================================================\n"));
-         } 
- });
-
-
-    // Name of the venueVenue location and Date of the Event by using moment js ( moment to format this as "MM/DD/YYYY")   
-} else if ( action === "spotify-this-song") {
-
-    let songName = parameter;
-
-    if (songName === undefined) {
-        songName = "The Sign by Ace of Base.";
-    } 
-   
-
-     spotify.search({ type: "track", query: songName, limit: 1  }, function(err, data) {
-            if (err) {
-            return console.log("Error occurred: " + err);
-            }else {
-        
-            log(chalk.green("\n======================================================================================================================================\n"));
-            log(chalk.red("Artist: ") + data.tracks.items[0].artists[0].name);
-            log(chalk.red("Song: ") + data.tracks.items[0].name);
-            log(chalk.red("Preview: ") + data.tracks.items[0].preview_url);
-            log(chalk.red("Album: ") + data.tracks.items[0].album.name);
-            log(chalk.green("\n======================================================================================================================================\n"));
-        
+            let result = JSON.parse(body)[0];
+            let newResult = [
+            "Venue name " + result.venue.name,
+            "Venue location " + result.venue.city,
+            "Date of Event " + moment(result.datetime).format("MM/DD/YYYY")
+        ].join("\n\n");
+            fs.appendFile("log.txt", newResult + divider, function(err) {
+                if (err) throw err;
+                console.log(newResult);
+             });
         }
     });
 
-     } else if ( action === "do-what-it-says") {
-        log(chalk.blue("\n==================================================================================================================================================\n"));
-        log(chalk.green("do what it says"));
-        log(chalk.blue("\n==================================================================================================================================================\n"));
+
+    // Name of the venueVenue location and Date of the Event by using moment js ( moment to format this as "MM/DD/YYYY")   
+} else if (action === "spotify-this-song") {
+
+    let songName = parameter;
+
+    if (songName == "") {
+        songName = "The Sign by Ace of Base.";
     }
+
+
+    spotify.search({ type: "track", query: songName, limit: 1 }, function (err, data) {
+        if (err) {
+            return console.log("Error occurred: " + err);
+        } else {
+            let dataResult = [
+            "Artist: " + data.tracks.items[0].artists[0].name,
+            "Song: " + data.tracks.items[0].name,
+            "Album: " + data.tracks.items[0].album.name,
+            "Preview: " + data.tracks.items[0].preview_url
+            ].join("\n\n");
+
+            fs.appendFile("log.txt", dataResult + divider, function(err) {
+                if (err) throw err;
+                console.log(dataResult);
+             });
+        }
+    });
+
+} else if (action === "do-what-it-says") {
+    fs.appendFile("log.txt", action + divider, function(err) {
+        if (err) throw err;
+     });
+    console.log("do what it says");
+}

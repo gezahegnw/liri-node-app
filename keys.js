@@ -12,11 +12,11 @@ const spotifyKeys = {
     
   }
   // OMDB api key
-const omdbKey = "3bc50c76";
+//const omdbKey = "3bc50c76";
 //bandsintwon api key
 //const bandsInTownKey= bd080d4d6b0498546f5f5eb209ca0575;
 
 
 module.exports.spotifyKeys = spotifyKeys;
-module.exports.omdbKey = omdbKey;
+//module.exports.omdbKey = omdbKey;
 //module.exports.bandsInTownKey = bandsInTownKey;
