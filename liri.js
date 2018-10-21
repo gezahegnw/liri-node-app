@@ -8,11 +8,7 @@ let Spotify = require('node-spotify-api');
 const omdb = require('omdb');
 const moment = require('moment');
 
-var spotify = new Spotify({
-    id: keys.spotifyKeys.client_ID,
-    secret: keys.spotifyKeys.client_secret
-});
-
+var spotify = new Spotify(keys.spotify);
 
 const action = process.argv[2];
 const parameter = process.argv.slice(3).join(" ");
