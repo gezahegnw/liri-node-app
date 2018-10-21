@@ -4,11 +4,10 @@ require('dotenv').config()
 const fs = require('fs');
 const keys = require('./keys.js');
 const request = require('request');
-let Spotify = require('node-spotify-api');
+const Spotify = require('node-spotify-api');
 const omdb = require('omdb');
 const moment = require('moment');
-
-var spotify = new Spotify(keys.spotify);
+const spotify = new Spotify(keys.spotify);
 
 const action = process.argv[2];
 const parameter = process.argv.slice(3).join(" ");
