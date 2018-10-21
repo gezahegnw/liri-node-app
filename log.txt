@@ -1,28 +1,3 @@
-
-Title :Saw
-
-Year :29 Oct 2004
-
-IMDB Rating :7.6
-
-Rotten Tomatoes Rating :49%
-
-Country :USA
-
-Language :English
-
-Plot :Two strangers, who awaken in a room with no recollection of how they got there, soon discover they're pawns in a deadly game perpetrated by a notorious serial killer.
-
-Actors :Leigh Whannell, Cary Elwes, Danny Glover, Ken Leung
-============================================================================================================
-
-Venue name Seven Lions Presents: The Journey 2 Tour
-
-Venue location Saint Louis
-
-Date of Event 10/19/2018
-============================================================================================================
-
 Title :Mr. Nobody
 
 Year :26 Sep 2013
@@ -40,6 +15,30 @@ Plot :A boy stands on a station platform as a train is about to leave. Should he
 Actors :Jared Leto, Sarah Polley, Diane Kruger, Linh Dan Pham
 ============================================================================================================
 
+Title :Death Race
+
+Year :22 Aug 2008
+
+IMDB Rating :6.4
+
+Rotten Tomatoes Rating :42%
+
+Country :USA, Germany, UK
+
+Language :English
+
+Plot :Ex-con Jensen Ames is forced by the warden of a notorious prison to compete in our post-industrial world's most popular sport: a car race in which inmates must brutalize and kill one another on the road to victory.
+
+Actors :Jason Statham, Joan Allen, Ian McShane, Tyrese Gibson
+============================================================================================================
+
+Venue name Seven Lions Presents: The Journey 2 Tour
+
+Venue location Nashville
+
+Date of Event 10/20/2018
+============================================================================================================
+
 Artist: Karaoke Box
 
 Song: I Saw the Sign (Karaoke Playback with Lead Vocals) [Made Famous by Ace of Base]
@@ -49,10 +48,15 @@ Album: Karaoke Box: Reggae Greatest Hits
 Preview: https://p.scdn.co/mp3-preview/56ce61443e2a6475875fb9c5ab0bacf46a2e217f?cid=8387a67d5c5e4d47b12a3237f47da371
 ============================================================================================================
 
-Venue name Seven Lions Presents: The Journey 2 Tour
+Artist: Zara Larsson
 
-Venue location Saint Louis
+Song: Never Forget You
 
-Date of Event 10/19/2018
+Album: So Good
+
+Preview: https://p.scdn.co/mp3-preview/0ce1f42d1a988c629df6fcaca5d3db5742b98f9e?cid=8387a67d5c5e4d47b12a3237f47da371
+============================================================================================================
+
+do-what-it-says
 ============================================================================================================
 

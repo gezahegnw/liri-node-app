@@ -13,11 +13,9 @@ var spotify = new Spotify({
     secret: keys.spotifyKeys.client_secret
 });
 
-const chalk = require('chalk');
 
 const action = process.argv[2];
 const parameter = process.argv.slice(3).join(" ");
-const log = console.log;
 let divider = "\n============================================================================================================\n\n";
 
 // If no song is provided then your program will default to Rush Over Me by seven lions.
@@ -32,18 +30,7 @@ if (action === "movie-this") {
         let result = JSON.parse(body);
         if (!error && response.statusCode === 200) {
             console.log(error);
-/*
-            log(chalk.red("\n==================================================================================================================================================\n"));
-            log(chalk.green("Title :") + result.Title);
-            log(chalk.green("Year :") + result.Released);
-            log(chalk.green("IMDB Rating :") + result.imdbRating);
-            log(chalk.green("Rotten Tomatoes Rating :") + result.Ratings[1].Value);
-            log(chalk.green("Country :") + result.Country);
-            log(chalk.green("Language :") + result.Language);
-            log(chalk.green("Plot :") + result.Plot);
-            log(chalk.green("Actors :") + result.Actors);
-            log(chalk.red("\n====================================================================================================================================================\n"));
-         */  
+
             let saveFile = [
                 "Title :" + result.Title,
                 "Year :" + result.Released,
@@ -53,17 +40,17 @@ if (action === "movie-this") {
                 "Language :" + result.Language,
                 "Plot :" + result.Plot,
                 "Actors :" + result.Actors,
-               
-         ].join("\n\n");
+
+            ].join("\n\n");
 
             // Append showData and the divider to log.txt, print showData to the console
-            fs.appendFile("log.txt", saveFile + divider, function(err) {
+            fs.appendFile("log.txt", saveFile + divider, function (err) {
                 if (err) throw err;
                 console.log(saveFile);
-             });
+            });
         }
     });
-        
+
 }
 else if (action === "concert-this") {
 
@@ -77,14 +64,14 @@ else if (action === "concert-this") {
             console.log(error);
             let result = JSON.parse(body)[0];
             let newResult = [
-            "Venue name " + result.venue.name,
-            "Venue location " + result.venue.city,
-            "Date of Event " + moment(result.datetime).format("MM/DD/YYYY")
-        ].join("\n\n");
-            fs.appendFile("log.txt", newResult + divider, function(err) {
+                "Venue name " + result.venue.name,
+                "Venue location " + result.venue.city,
+                "Date of Event " + moment(result.datetime).format("MM/DD/YYYY")
+            ].join("\n\n");
+            fs.appendFile("log.txt", newResult + divider, function (err) {
                 if (err) throw err;
                 console.log(newResult);
-             });
+            });
         }
     });
 
@@ -104,22 +91,22 @@ else if (action === "concert-this") {
             return console.log("Error occurred: " + err);
         } else {
             let dataResult = [
-            "Artist: " + data.tracks.items[0].artists[0].name,
-            "Song: " + data.tracks.items[0].name,
-            "Album: " + data.tracks.items[0].album.name,
-            "Preview: " + data.tracks.items[0].preview_url
+                "Artist: " + data.tracks.items[0].artists[0].name,
+                "Song: " + data.tracks.items[0].name,
+                "Album: " + data.tracks.items[0].album.name,
+                "Preview: " + data.tracks.items[0].preview_url
             ].join("\n\n");
 
-            fs.appendFile("log.txt", dataResult + divider, function(err) {
+            fs.appendFile("log.txt", dataResult + divider, function (err) {
                 if (err) throw err;
                 console.log(dataResult);
-             });
+            });
         }
     });
 
 } else if (action === "do-what-it-says") {
-    fs.appendFile("log.txt", action + divider, function(err) {
+    fs.appendFile("log.txt", action + divider, function (err) {
         if (err) throw err;
-     });
+    });
     console.log("do what it says");
 }

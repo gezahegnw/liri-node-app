@@ -19,7 +19,6 @@
   "homepage": "https://github.com/gezahegnw/liri-node-app#readme",
   "dependencies": {
     "bandsintown": "^1.0.1",
-    "chalk": "^2.4.1",
     "dotenv": "^6.1.0",
     "momentjs": "^2.0.0",
     "node-spotify-api": "^1.0.7",
